@@ -1,12 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { 
-  addCounter,
-  remCounter,
-  increment,
-  decrement
-} from '../actions/actions.js'
-
 
 const CountersP = ({
   counters,
@@ -32,8 +25,18 @@ const CountersP = ({
             index
           })
         }}>+</button>
-        <button >-</button>
-        <button >Remove</button>
+        <button onClick={() => {
+          dispatch({
+            type:'DECREMENT',
+            index
+          })
+        }} >-</button>
+        <button onClick={() => {
+          dispatch({
+            type: 'REM_COUNTER',
+            index
+          })
+        }} >Remove</button>
       </div>
     ))
     }
@@ -45,16 +48,6 @@ const mapStateToProps = state => {
     counters: state.counters
   }
 }
-
-//const mapDispatchToProps = dispatch => {
-//  return {
-//    addCounterC: () => dispatch(addCounter()),
-//    remCounterC: () => dispatch(remCounter(index)),
-//    incrementC: () => dispatch(increment()),
-//    decrementC: index => dispatch(decrement(index))
-//  }
-//}
-
 
 const Counters = connect(
   mapStateToProps,
