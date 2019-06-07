@@ -1,42 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import {
+  addCounter,
+  remCounter,
+  increment,
+  decrement
+} from '../actions/actions.js'
 
 const CountersP = ({
   counters,
-  dispatch
+  addCounterC,
+  remCounterC,
+  incrementC,
+  decrementC
 }) => (
   <div className="counters">
-    <button onClick={
-      () => dispatch({
-        type: 'ADD_COUNTER'
-      })
-    }>Add Counter</button>
-  {
-    console.log(counters)
-  }
+    <button onClick={addCounterC}>Add Counter</button>
     {counters.map((counter, index) => (
       <div className="counter" key={index}>
         <h1>Counter</h1>
         <h2>value:{counter}</h2>
-        <button onClick={() => {
-          console.log(index)
-          dispatch({
-            type:'INCREMENT',
-            index
-          })
-        }}>+</button>
-        <button onClick={() => {
-          dispatch({
-            type:'DECREMENT',
-            index
-          })
-        }} >-</button>
-        <button onClick={() => {
-          dispatch({
-            type: 'REM_COUNTER',
-            index
-          })
-        }} >Remove</button>
+        <button onClick={() => incrementC(index)}>+</button>
+        <button onClick={() => decrementC(index)} >-</button>
+        <button onClick={() => remCounterC(index)} >Remove</button>
       </div>
     ))
     }
@@ -49,9 +35,18 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    addCounterC: () => dispatch(addCounter()),
+    remCounterC: index => dispatch(remCounter(index)),
+    incrementC: index => dispatch(increment(index)),
+    decrementC: index => dispatch(decrement(index))
+  }
+}
+
 const Counters = connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(CountersP);
 
 export default Counters
